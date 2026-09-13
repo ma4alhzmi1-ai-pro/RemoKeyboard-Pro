@@ -200,6 +200,8 @@ public final class CalligraphyEngine {
         DIWANI_MAP.put('ي', "يـِ");
     }
 
+    private static final Map<String, Typeface> TYPEFACE_CACHE = new HashMap<>();
+
     /** تحويل الحرف المفرد أثناء النقر على المفتاح */
     public static String transformChar(char c, FontType fontType) {
         if (fontType == null || fontType == FontType.DEFAULT) {
@@ -207,83 +209,6 @@ public final class CalligraphyEngine {
         }
 
         switch (fontType) {
-            case CAIRO:
-                return Character.isWhitespace(c) ? " " : (c + "̳");
-            case TAJAWAL:
-                return Character.isWhitespace(c) ? " " : (c + "̱");
-            case AMIRI:
-                return Character.isWhitespace(c) ? " " : (c + "ُ");
-            case AREF_RUQAA:
-                return Character.isWhitespace(c) ? " " : (c + "ـ");
-            case MARHEY:
-                return Character.isWhitespace(c) ? " " : (c + "✨");
-            case CHANGA:
-                return Character.isWhitespace(c) ? "  " : (c + " ̲");
-            case REEM_KUFI:
-                return KUFI_MAP.getOrDefault(c, String.valueOf(c));
-            case SCHEHERAZADE:
-                return Character.isWhitespace(c) ? " " : (c + "َ");
-            case LEMONADA:
-                return Character.isWhitespace(c) ? " " : (c + "✿");
-            case ALMARAI:
-                return Character.isWhitespace(c) ? " " : (c + " ");
-            case LATEEF:
-                return Character.isWhitespace(c) ? " " : (c + "ٜ");
-            case RAQQAS:
-                return Character.isWhitespace(c) ? " " : (c + "؏");
-            case MESSIRI:
-                return Character.isWhitespace(c) ? " " : (c + " ̶");
-            case KUFI:
-                return KUFI_MAP.getOrDefault(c, String.valueOf(c));
-            case RUQAH:
-                return RUQAH_MAP.getOrDefault(c, String.valueOf(c));
-            case BOLD:
-                return BOLD_MAP.getOrDefault(c, String.valueOf(c));
-            case THULUTH:
-                return THULUTH_MAP.getOrDefault(c, String.valueOf(c));
-            case SULTANI:
-                return SULTANI_MAP.getOrDefault(c, String.valueOf(c));
-            case NAQAA:
-                return Character.isWhitespace(c) ? "   " : (c + " ");
-            case DIWANI:
-                return DIWANI_MAP.getOrDefault(c, String.valueOf(c));
-            case NASKH:
-                return Character.isWhitespace(c) ? " " : (c + "َ");
-            case ANDALUSI:
-                if (c == 'ف') return "ڢ";
-                if (c == 'ق') return "ڧ";
-                if (c == 'ن') return "ڽ";
-                if (c == 'ي') return "ۍ";
-                if (c == 'ك') return "ڪ";
-                return String.valueOf(c);
-            case FARISI:
-                if (c == 'ي' || c == 'ى') return "ے";
-                if (c == 'ك') return "ک";
-                if (c == 'ه') return "ھ";
-                if (c == 'ة') return "ۂ";
-                if (c == 'و') return "ۆ";
-                return String.valueOf(c);
-            case OSMANI:
-                if (c == 'ا') return "ٱ";
-                if (c == 'و') return "ۅ";
-                if (c == 'ي') return "ے";
-                if (c == 'ك') return "ڪ";
-                if (c == 'ت') return "ٺ";
-                return String.valueOf(c);
-            case IJAZA:
-                if (c == 'ا') return "آ";
-                if (c == 'ل') return "لـِ";
-                if (c == 'م') return "مـُ";
-                if (c == 'ن') return "نْ";
-                return String.valueOf(c);
-            case KUFI_SQUARE:
-                return Character.isWhitespace(c) ? "  " : (c + "ـ");
-            case RUQAH_MODERN:
-                if (c == 'س') return "سـ";
-                if (c == 'ش') return "شـ";
-                if (c == 'ك') return "ڪـ";
-                if (c == 'ه') return "ھـ";
-                return String.valueOf(c);
             case MUSNAD:
                 return toMusnad(c);
             case EN_BOLD:
@@ -295,6 +220,7 @@ public final class CalligraphyEngine {
             case EN_SMALLCAPS:
                 return toEnSmallCaps(c);
             default:
+                // خطوط الرقعة والنسخ والكوفي والقاهرة وتجوال والأميري وتشانغا وغيرها هي خطوط طباعية حقيقية تُعرض على المفاتيح عبر Typeface
                 return String.valueOf(c);
         }
     }
@@ -381,53 +307,78 @@ public final class CalligraphyEngine {
         if (fontType == null || fontType == FontType.DEFAULT) {
             return Typeface.create("sans-serif", defaultStyle);
         }
-        try {
-            switch (fontType) {
-                case NASKH:
-                case THULUTH:
-                case ANDALUSI:
-                case OSMANI:
-                case IJAZA:
-                case SULTANI:
-                case AMIRI:
-                case SCHEHERAZADE:
-                    return Typeface.create(Typeface.SERIF, defaultStyle);
-                case BOLD:
-                    return Typeface.create("sans-serif", Typeface.BOLD);
-                case KUFI:
-                case KUFI_SQUARE:
-                case CAIRO:
-                case TAJAWAL:
-                case CHANGA:
-                case ALMARAI:
-                case MESSIRI:
-                case REEM_KUFI:
-                    return Typeface.create("sans-serif-medium", Typeface.BOLD);
-                case RUQAH:
-                case RUQAH_MODERN:
-                case DIWANI:
-                case AREF_RUQAA:
-                case RAQQAS:
-                    return Typeface.create("cursive", defaultStyle);
-                case MARHEY:
-                case LEMONADA:
-                case LATEEF:
-                    return Typeface.create("sans-serif", defaultStyle);
-                case NAQAA:
-                    return Typeface.create("sans-serif-light", defaultStyle);
-                case EN_BOLD:
-                    return Typeface.create("sans-serif", Typeface.BOLD);
-                case EN_SCRIPT:
-                    return Typeface.create(Typeface.SERIF, Typeface.ITALIC);
-                case EN_CIRCLED:
-                    return Typeface.create(Typeface.MONOSPACE, defaultStyle);
-                case EN_SMALLCAPS:
-                    return Typeface.create("sans-serif", Typeface.BOLD);
-                default:
-                    return Typeface.create("sans-serif", defaultStyle);
-            }
-        } catch (Exception ignored) {
-            return Typeface.create("sans-serif", defaultStyle);
+
+        String assetPath = null;
+        switch (fontType) {
+            case CAIRO:
+                assetPath = "fonts/cairo.ttf";
+                break;
+            case TAJAWAL:
+                assetPath = "fonts/tajawal.ttf";
+                break;
+            case AMIRI:
+            case NASKH:
+            case THULUTH:
+            case ANDALUSI:
+            case OSMANI:
+            case IJAZA:
+            case SCHEHERAZADE:
+                assetPath = "fonts/amiri.ttf";
+                break;
+            case AREF_RUQAA:
+            case RUQAH:
+            case RUQAH_MODERN:
+            case DIWANI:
+            case FARISI:
+            case RAQQAS:
+                assetPath = "fonts/aref_ruqaa.ttf";
+                break;
+            case REEM_KUFI:
+            case KUFI:
+            case KUFI_SQUARE:
+                assetPath = "fonts/reem_kufi.ttf";
+                break;
+            case ALMARAI:
+            case SULTANI:
+            case NAQAA:
+                assetPath = "fonts/almarai.ttf";
+                break;
+            case CHANGA:
+            case BOLD:
+                assetPath = "fonts/changa.ttf";
+                break;
+            case LEMONADA:
+            case MARHEY:
+            case LATEEF:
+            case MESSIRI:
+                assetPath = "fonts/lemonada.ttf";
+                break;
+            case EN_BOLD:
+                return Typeface.create("sans-serif", Typeface.BOLD);
+            case EN_SCRIPT:
+                return Typeface.create(Typeface.SERIF, Typeface.ITALIC);
+            case EN_CIRCLED:
+                return Typeface.create(Typeface.MONOSPACE, defaultStyle);
+            case EN_SMALLCAPS:
+                return Typeface.create("sans-serif", Typeface.BOLD);
+            default:
+                break;
         }
+
+        if (assetPath != null && context != null) {
+            try {
+                synchronized (TYPEFACE_CACHE) {
+                    Typeface cached = TYPEFACE_CACHE.get(assetPath);
+                    if (cached != null) return cached;
+                    Typeface loaded = Typeface.createFromAsset(context.getAssets(), assetPath);
+                    if (loaded != null) {
+                        TYPEFACE_CACHE.put(assetPath, loaded);
+                        return loaded;
+                    }
+                }
+            } catch (Exception ignored) {}
+        }
+
+        return Typeface.create("sans-serif", defaultStyle);
     }
 }

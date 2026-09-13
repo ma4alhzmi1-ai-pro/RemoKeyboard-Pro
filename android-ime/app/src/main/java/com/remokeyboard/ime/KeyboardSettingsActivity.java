@@ -93,6 +93,7 @@ public class KeyboardSettingsActivity extends Activity {
         addHeader(root, "إعدادات ريموكيبورد مزخرف", false);
         root.addView(buildDeveloperNotice());
         root.addView(buildUpdateNotice());
+        root.addView(buildSecurityNotice());
 
         EditText testInput = new EditText(this);
         testInput.setHint("جرب الكتابة بريموكيبورد هنا الآن...");
@@ -255,18 +256,111 @@ public class KeyboardSettingsActivity extends Activity {
             addToggle(root, "اهتزاز المفاتيح", "اهتزاز خفيف عند الضغط", "vibration", true);
             addToggle(root, "صوت المفاتيح", "صوت نقر اختياري", "key_sound", false);
         } else if (panel == Panel.HEIGHT) {
-            addSection(root, "ارتفاع الكيبورد");
-            addChoice(root, "مدمج", "مساحة أكبر للتطبيق", "compact".equals(preferences.getString("height", "standard")), () -> chooseHeight("compact", 46));
-            addChoice(root, "قياسي", "الموصى به", "standard".equals(preferences.getString("height", "standard")), () -> chooseHeight("standard", 52));
-            addChoice(root, "مريح", "مفاتيح أعلى ولمس أسهل", "comfortable".equals(preferences.getString("height", "standard")), () -> chooseHeight("comfortable", 59));
-            addSection(root, "حجم الأحرف");
-            addChoice(root, "قياسي", "توازن بين الرموز والحروف", true);
-            addChoice(root, "كبير", "وضوح أعلى", false);
+            int curHeight = preferences.getInt("key_height", 52);
+            int curFontSize = preferences.getInt("key_font_size", 20);
+            int curMargin = preferences.getInt("key_margin", 1);
+
+            addSection(root, "حقل تجربة حي للأبعاد والأزرار");
+            EditText testField = new EditText(this);
+            testField.setHint("اكتب هنا لتجربة حجم الارتفاع والأزرار فوراً...");
+            testField.setHintTextColor(secondary);
+            testField.setTextColor(text);
+            testField.setBackground(rounded(surface, dp(8), false));
+            testField.setPadding(dp(16), dp(12), dp(16), dp(12));
+            testField.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+            LinearLayout.LayoutParams tfParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            tfParams.setMargins(dp(16), dp(2), dp(16), dp(12));
+            root.addView(testField, tfParams);
+
+            addSection(root, "ارتفاع الكيبورد (الحالي: " + curHeight + " dp)");
+            addChoice(root, "مدمج صغير (44 dp)", "مساحة أكبر للتطبيقات والمحادثات", curHeight == 44, () -> chooseHeight("compact", 44));
+            addChoice(root, "متوسط رشيق (48 dp)", "حجم خفيف ومتوازن", curHeight == 48, () -> chooseHeight("medium", 48));
+            addChoice(root, "قياسي موصى به (52 dp)", "الحجم الأمثل لكافة شاشات الهواتف", curHeight == 52, () -> chooseHeight("standard", 52));
+            addChoice(root, "مريح واسع (58 dp)", "أزرار أطول ولمس أسهل", curHeight == 58, () -> chooseHeight("comfortable", 58));
+            addChoice(root, "كبير جداً (66 dp)", "للشاشات الكبيرة وسهولة النقر", curHeight == 66, () -> chooseHeight("large", 66));
+            addChoice(root, "عملاق أقصى حجم (74 dp)", "أقصى ارتفاع للكيبورد", curHeight == 74, () -> chooseHeight("huge", 74));
+
+            addSection(root, "الضبط الدقيق لارتفاع الكيبورد");
+            addAction(root, "➕ زيادة ارتفاع الكيبورد (+2 dp)", "القيمة الحالية: " + curHeight + " dp", () -> {
+                int newH = Math.min(80, curHeight + 2);
+                chooseHeight("custom", newH);
+            });
+            addAction(root, "➖ إنقاص ارتفاع الكيبورد (-2 dp)", "القيمة الحالية: " + curHeight + " dp", () -> {
+                int newH = Math.max(38, curHeight - 2);
+                chooseHeight("custom", newH);
+            });
+
+            addSection(root, "حجم أزرار وأحرف الكيبورد (الحالي: " + curFontSize + " sp)");
+            addChoice(root, "أزرار صغيرة (خط 16 sp)", "حجم مدمج ومتقارب", curFontSize == 16, () -> {
+                preferences.edit().putInt("key_font_size", 16).apply();
+                notifyThemeChanged();
+                showPanel(Panel.HEIGHT);
+            });
+            addChoice(root, "أزرار قياسية معتمدة (خط 20 sp)", "الحجم المعتمد المتوازن لجميع الأحرف", curFontSize == 20, () -> {
+                preferences.edit().putInt("key_font_size", 20).apply();
+                notifyThemeChanged();
+                showPanel(Panel.HEIGHT);
+            });
+            addChoice(root, "أزرار كبيرة وبارزة (خط 24 sp)", "حروف واضحة ومقروءة جداً", curFontSize == 24, () -> {
+                preferences.edit().putInt("key_font_size", 24).apply();
+                notifyThemeChanged();
+                showPanel(Panel.HEIGHT);
+            });
+            addChoice(root, "أزرار عملاقة لكبار السن (خط 28 sp)", "أقصى وضوح لأحرف المفاتيح", curFontSize == 28, () -> {
+                preferences.edit().putInt("key_font_size", 28).apply();
+                notifyThemeChanged();
+                showPanel(Panel.HEIGHT);
+            });
+
+            addSection(root, "الضبط الدقيق لحجم أحرف الأزرار");
+            addAction(root, "➕ تكبير أحرف الأزرار (+1 sp)", "الحجم الحالي: " + curFontSize + " sp", () -> {
+                int newS = Math.min(34, curFontSize + 1);
+                preferences.edit().putInt("key_font_size", newS).apply();
+                notifyThemeChanged();
+                showPanel(Panel.HEIGHT);
+            });
+            addAction(root, "➖ تصغير أحرف الأزرار (-1 sp)", "الحجم الحالي: " + curFontSize + " sp", () -> {
+                int newS = Math.max(13, curFontSize - 1);
+                preferences.edit().putInt("key_font_size", newS).apply();
+                notifyThemeChanged();
+                showPanel(Panel.HEIGHT);
+            });
+
+            addSection(root, "تباعد ومسافات الأزرار (الهامش)");
+            addChoice(root, "أزرار متلاصقة وعريضة (0 dp)", "أزرار أعرض بأقصى مساحة للمس", curMargin == 0, () -> {
+                preferences.edit().putInt("key_margin", 0).apply();
+                notifyThemeChanged();
+                showPanel(Panel.HEIGHT);
+            });
+            addChoice(root, "تباعد قياسي متناسق (1 dp)", "المسافة المتوازنة المعتمدة", curMargin == 1, () -> {
+                preferences.edit().putInt("key_margin", 1).apply();
+                notifyThemeChanged();
+                showPanel(Panel.HEIGHT);
+            });
+            addChoice(root, "تباعد واسع للأزرار (2 dp)", "فصل واضح ومميز بين الأزرار", curMargin == 2, () -> {
+                preferences.edit().putInt("key_margin", 2).apply();
+                notifyThemeChanged();
+                showPanel(Panel.HEIGHT);
+            });
+
+            addSection(root, "استعادة الأبعاد الافتراضية");
+            addAction(root, "إعادة ضبط أبعاد الكيبورد وحجم الأزرار", "استعادة الارتفاع وحجم الخط والتباعد الافتراضي", () -> {
+                preferences.edit()
+                    .remove("key_height")
+                    .remove("height")
+                    .remove("key_font_size")
+                    .remove("key_margin")
+                    .remove("key_radius")
+                    .apply();
+                notifyThemeChanged();
+                Toast.makeText(this, "تمت استعادة الأبعاد الافتراضية للكيبورد والأزرار", Toast.LENGTH_SHORT).show();
+                showPanel(Panel.HEIGHT);
+            });
         } else if (panel == Panel.BOTTOM_ROW) {
             addSection(root, "أزرار الصف السفلي");
             addToggle(root, "زر المايك (الكتابة بالصوت)", "إظهار زر المايك 🎤 في الكيبورد للتحويل الصوتي", "bottom_voice", true, this::notifyThemeChanged);
-            addToggle(root, "زر الحافظة", "إظهار رمز الحافظة ▣ بجوار المسافة", "bottom_clipboard", true, this::notifyThemeChanged);
-            addToggle(root, "زر الإيموجي", "إظهار منتقي الإيموجي ☺", "bottom_emoji", true, this::notifyThemeChanged);
+            addToggle(root, "زر الحافظة", "إظهار زر الحافظة 📋 بجوار المسافة", "bottom_clipboard", true, this::notifyThemeChanged);
+            addToggle(root, "زر الإيموجي", "إظهار منتقي الإيموجي 😊", "bottom_emoji", true, this::notifyThemeChanged);
             addAction(root, "إعادة ترتيب الصف", "استعادة الترتيب الافتراضي", () -> { notifyThemeChanged(); Toast.makeText(this, "تم استعادة الصف السفلي", Toast.LENGTH_SHORT).show(); });
         } else if (panel == Panel.BACKUP) {
             addSection(root, "النسخ الاحتياطي");
@@ -452,17 +546,17 @@ public class KeyboardSettingsActivity extends Activity {
         addSection(root, "ثيمات نسائية كيوت");
         addThemeCard(root, "باربي فوشيا", "فوشيا حيوي مع قلوب متوهجة", "girly_pink_glam", "", Color.rgb(74, 14, 46), Color.rgb(112, 26, 69));
         addThemeCard(root, "حلوى الباستيل", "غزل البنات ووردي ناعم باودر", "girly_pastel_candy", "", Color.rgb(255, 231, 241), Color.rgb(255, 173, 204));
-        addThemeCard(root, "سحاب اللافندر", "سماء حالمة بنفسجية ناعمة", "girly_cotton_cloud", "", Color.rgb(30, 30, 56), Color.rgb(44, 44, 84));
+        addThemeCard(root, "سحاب اللافندر", "سماء حالمة بنفسجية ناعمة", "girly_cotton_cloud", "theme_lavender_cute", Color.rgb(30, 30, 56), Color.rgb(44, 44, 84));
         addThemeCard(root, "سكر ووردي", "وردي حلو وقلوب ناعمة", "cute", "", Color.rgb(255, 231, 241), Color.rgb(255, 173, 204));
-        addThemeCard(root, "لافندر كيوت", "بنفسجي هادئ ولمسة لؤلؤية", "cute", "", Color.rgb(238, 229, 255), Color.rgb(191, 164, 235));
+        addThemeCard(root, "لافندر كيوت", "بنفسجي هادئ ولمسة لؤلؤية", "cute", "theme_lavender_cute", Color.rgb(238, 229, 255), Color.rgb(191, 164, 235));
         addSection(root, "خلفيات إسلامية");
         addThemeCard(root, "فوانيس رمضانية", "هلال وفوانيس ذهبية", "ramadan", "remo_islamic_lanterns", Color.rgb(16, 41, 36), Color.rgb(78, 89, 66));
         addThemeCard(root, "مسجد الغروب", "كحلي، هلال، ونجوم هادئة", "ramadan", "remo_islamic_mosque_dusk", Color.rgb(18, 27, 61), Color.rgb(61, 72, 106));
         addSection(root, "ثيمات طبيعية ورياضية");
-        addThemeCard(root, "سباق السرعة (Racing)", "أحمر فيراري رياضي وألياف كربونية", "sport_racing", "", Color.rgb(24, 24, 27), Color.rgb(39, 39, 42));
+        addThemeCard(root, "سباق السرعة (Racing)", "أحمر فيراري رياضي وألياف كربونية", "sport_racing", "theme_racing", Color.rgb(24, 24, 27), Color.rgb(39, 39, 42));
         addThemeCard(root, "عشب الملعب (Football)", "أخضر نجيل كروي وخطوط بيضاء حماسية", "sport_football", "", Color.rgb(6, 78, 59), Color.rgb(6, 95, 70));
         addThemeCard(root, "غابة طبيعية", "أخضر أوراق ولمسة ترابية", "nature", "", Color.rgb(20, 48, 31), Color.rgb(67, 119, 74));
-        addThemeCard(root, "محيط هادئ", "أزرق مائي وهواء منعش", "nature", "", Color.rgb(12, 45, 66), Color.rgb(36, 117, 150));
+        addThemeCard(root, "محيط هادئ", "أزرق مائي وهواء منعش", "nature", "theme_ocean", Color.rgb(12, 45, 66), Color.rgb(36, 117, 150));
         addThemeCard(root, "ملعب الطاقة", "أحمر رياضي وأصفر حيوي", "sport", "", Color.rgb(25, 31, 40), Color.rgb(210, 70, 67));
         addThemeCard(root, "سباق ليلي", "كحلي سريع ولمسات برتقالية", "sport", "", Color.rgb(17, 26, 42), Color.rgb(238, 111, 45));
         addSection(root, "خلفيات أندية كرة القدم (مع الشعار ثلاثي الأبعاد)");
@@ -475,10 +569,10 @@ public class KeyboardSettingsActivity extends Activity {
         addThemeCard(root, "مانشستر يونايتد (Man Utd)", "الشياطين الحمر - أحمر ناري وأسود مع شعار اليونايتد", "club_manutd", "club_manutd", Color.rgb(40, 5, 10), Color.rgb(190, 15, 25));
         addThemeCard(root, "ليفربول (Liverpool FC)", "الريدز - أحمر ليفربول الأسطوري مع طائر الليفر", "club_liverpool", "club_liverpool", Color.rgb(45, 5, 10), Color.rgb(180, 15, 25));
         addSection(root, "ثيمات أعلام الدول");
-        addThemeCard(root, "علم السعودية", "أخضر وكتابة بيضاء", "flag_sa", "", Color.rgb(7, 54, 31), Color.rgb(30, 116, 67));
-        addThemeCard(root, "علم فلسطين", "أسود وأبيض وأخضر وأحمر", "flag_ps", "", Color.rgb(28, 30, 32), Color.rgb(173, 45, 51));
-        addThemeCard(root, "علم الإمارات", "أخضر وأبيض وأسود وأحمر", "flag_ae", "", Color.rgb(22, 32, 30), Color.rgb(179, 55, 55));
-        addThemeCard(root, "علم الأردن", "أسود وأبيض وأخضر وأحمر", "flag_jo", "", Color.rgb(30, 30, 34), Color.rgb(143, 48, 48));
+        addThemeCard(root, "علم السعودية", "أخضر وكتابة بيضاء مع السيفين والنخلة", "flag_sa", "flag_sa", Color.rgb(7, 54, 31), Color.rgb(30, 116, 67));
+        addThemeCard(root, "علم فلسطين", "أسود وأبيض وأخضر ومثلث أحمر", "flag_ps", "flag_ps", Color.rgb(28, 30, 32), Color.rgb(173, 45, 51));
+        addThemeCard(root, "علم الإمارات", "أخضر وأبيض وأسود وشريط أحمر", "flag_ae", "flag_ae", Color.rgb(22, 32, 30), Color.rgb(179, 55, 55));
+        addThemeCard(root, "علم الأردن", "أسود وأبيض وأخضر ومثلث أحمر ونجمة", "flag_jo", "flag_jo", Color.rgb(30, 30, 34), Color.rgb(143, 48, 48));
         addSection(root, "تخصيص الخلفية والألوان");
         addAction(root, "اختيار صورة من الاستوديو", "استخدم صورة من معرض الجهاز كخلفية للكيبورد", this::chooseBackgroundFromStudio);
         addAction(root, "إزالة صورة الخلفية", "العودة إلى الخلفية اللونية للثيم", () -> { preferences.edit().remove("background_uri").remove("background_asset").apply(); notifyThemeChanged(); Toast.makeText(this, "تمت إزالة الخلفية", Toast.LENGTH_SHORT).show(); });
@@ -561,6 +655,7 @@ public class KeyboardSettingsActivity extends Activity {
 
     private void chooseHeight(String value, int height) {
         preferences.edit().putString("height", value).putInt("key_height", height).apply();
+        notifyThemeChanged();
         showPanel(Panel.HEIGHT);
     }
 
@@ -834,6 +929,48 @@ public class KeyboardSettingsActivity extends Activity {
         LinearLayout.LayoutParams tParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         tParams.topMargin = dp(6);
         notice.addView(updateDesc, tParams);
+
+        return notice;
+    }
+
+    private View buildSecurityNotice() {
+        LinearLayout notice = new LinearLayout(this);
+        notice.setOrientation(LinearLayout.VERTICAL);
+        notice.setPadding(dp(16), dp(12), dp(16), dp(12));
+        notice.setBackground(rounded(Color.rgb(18, 30, 48), dp(10), false));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        params.setMargins(dp(16), dp(4), dp(16), dp(12));
+        notice.setLayoutParams(params);
+
+        LinearLayout topRow = new LinearLayout(this);
+        topRow.setOrientation(LinearLayout.HORIZONTAL);
+        topRow.setGravity(Gravity.CENTER_VERTICAL);
+
+        TextView badge = new TextView(this);
+        badge.setText("🛡️ تنبيه هام حول إشعارات التفعيل من أندرويد");
+        badge.setTextColor(Color.rgb(92, 200, 255));
+        badge.setTextSize(13);
+        badge.setTypeface(Typeface.DEFAULT_BOLD);
+        topRow.addView(badge, new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
+
+        TextView close = new TextView(this);
+        close.setText("✕");
+        close.setTextColor(secondary);
+        close.setTextSize(15);
+        close.setPadding(dp(8), dp(4), dp(8), dp(4));
+        close.setOnClickListener(v -> notice.setVisibility(View.GONE));
+        topRow.addView(close);
+
+        notice.addView(topRow);
+
+        TextView secDesc = new TextView(this);
+        secDesc.setText("• رسالتا التحذير (جمع النصوص وتنبيه إعادة التشغيل) هما إشعاران نظاميان يظهرهما نظام أندرويد تلقائياً لأي لوحة مفاتيح خارجية.\n• ريموكيبورد آمن 100%، لا يجمع ولا يسجل أي بيانات، ويعمل محلياً بالكامل على جهازك دون اتصال خارجي!");
+        secDesc.setTextColor(Color.rgb(220, 240, 255));
+        secDesc.setTextSize(12);
+        secDesc.setLineSpacing(dp(2), 1f);
+        LinearLayout.LayoutParams sParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        sParams.topMargin = dp(6);
+        notice.addView(secDesc, sParams);
 
         return notice;
     }

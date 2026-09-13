@@ -35,6 +35,9 @@ final class KeyboardPalette {
 
     static KeyboardPalette from(SharedPreferences preferences) {
         String theme = preferences.getString("theme", "navy");
+        String bgAsset = preferences.getString("background_asset", "");
+        String bgUri = preferences.getString("background_uri", "");
+        boolean hasBackground = (bgAsset != null && !bgAsset.isEmpty()) || (bgUri != null && !bgUri.isEmpty());
         KeyboardPalette base;
         if ("custom".equals(theme)) {
             base = new KeyboardPalette(
@@ -85,39 +88,41 @@ final class KeyboardPalette {
         } else if ("default_royal_blue".equals(theme)) {
             base = new KeyboardPalette(Color.rgb(11, 25, 44), Color.rgb(7, 16, 29), Color.rgb(30, 62, 98), Color.rgb(25, 118, 210), Color.WHITE, Color.rgb(187, 222, 251), Color.rgb(0, 141, 255));
         } else if ("flag_sa".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(7, 54, 31), Color.rgb(5, 38, 22), Color.rgb(30, 116, 67), Color.rgb(20, 83, 48), Color.WHITE, Color.rgb(190, 224, 201), Color.rgb(221, 236, 226));
+            base = new KeyboardPalette(Color.rgb(7, 54, 31), Color.rgb(5, 38, 22), Color.rgb(20, 83, 48), Color.rgb(30, 116, 67), Color.WHITE, Color.rgb(190, 224, 201), Color.rgb(221, 236, 226));
         } else if ("flag_ps".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(28, 30, 32), Color.rgb(12, 13, 15), Color.rgb(173, 45, 51), Color.rgb(42, 93, 57), Color.WHITE, Color.rgb(214, 214, 214), Color.rgb(220, 75, 75));
+            base = new KeyboardPalette(Color.rgb(24, 24, 26), Color.rgb(12, 13, 15), Color.rgb(36, 38, 42), Color.rgb(173, 45, 51), Color.WHITE, Color.rgb(214, 214, 214), Color.rgb(220, 75, 75));
         } else if ("flag_ae".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(22, 32, 30), Color.rgb(12, 20, 18), Color.rgb(179, 55, 55), Color.rgb(35, 111, 70), Color.WHITE, Color.rgb(204, 221, 211), Color.rgb(218, 91, 77));
+            base = new KeyboardPalette(Color.rgb(22, 32, 30), Color.rgb(12, 20, 18), Color.rgb(30, 48, 42), Color.rgb(179, 55, 55), Color.WHITE, Color.rgb(204, 221, 211), Color.rgb(218, 91, 77));
         } else if ("flag_jo".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(30, 30, 34), Color.rgb(13, 14, 16), Color.rgb(143, 48, 48), Color.rgb(43, 93, 60), Color.WHITE, Color.rgb(214, 214, 214), Color.rgb(218, 83, 83));
+            base = new KeyboardPalette(Color.rgb(30, 30, 34), Color.rgb(13, 14, 16), Color.rgb(42, 42, 48), Color.rgb(143, 48, 48), Color.WHITE, Color.rgb(214, 214, 214), Color.rgb(218, 83, 83));
         } else if ("club_alhilal".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(0, 24, 75), Color.rgb(0, 15, 50), Color.rgb(0, 50, 140), Color.rgb(0, 90, 200), Color.WHITE, Color.rgb(180, 215, 255), Color.rgb(30, 144, 255));
+            base = new KeyboardPalette(Color.rgb(0, 20, 60), Color.rgb(0, 12, 40), Color.rgb(0, 45, 120), Color.rgb(0, 75, 180), Color.WHITE, Color.rgb(180, 215, 255), Color.rgb(30, 144, 255));
         } else if ("club_alnassr".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(15, 20, 35), Color.rgb(10, 14, 25), Color.rgb(220, 175, 0), Color.rgb(30, 45, 90), Color.WHITE, Color.rgb(255, 235, 150), Color.rgb(255, 215, 0));
+            base = new KeyboardPalette(Color.rgb(15, 20, 35), Color.rgb(10, 14, 25), Color.rgb(30, 40, 70), Color.rgb(200, 160, 0), Color.WHITE, Color.rgb(255, 235, 150), Color.rgb(255, 215, 0));
         } else if ("club_alittihad".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(15, 15, 15), Color.rgb(8, 8, 8), Color.rgb(230, 175, 0), Color.rgb(40, 40, 40), Color.WHITE, Color.rgb(255, 230, 140), Color.rgb(245, 190, 0));
+            base = new KeyboardPalette(Color.rgb(15, 15, 15), Color.rgb(8, 8, 8), Color.rgb(35, 35, 35), Color.rgb(210, 160, 0), Color.WHITE, Color.rgb(255, 230, 140), Color.rgb(245, 190, 0));
         } else if ("club_alahli".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(5, 35, 20), Color.rgb(3, 24, 14), Color.rgb(10, 90, 48), Color.rgb(15, 120, 65), Color.WHITE, Color.rgb(180, 240, 205), Color.rgb(46, 204, 113));
+            base = new KeyboardPalette(Color.rgb(5, 30, 18), Color.rgb(3, 20, 12), Color.rgb(12, 60, 35), Color.rgb(15, 110, 55), Color.WHITE, Color.rgb(180, 240, 205), Color.rgb(46, 204, 113));
         } else if ("club_realmadrid".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(14, 16, 28), Color.rgb(8, 10, 18), Color.rgb(35, 40, 65), Color.rgb(212, 175, 55), Color.WHITE, Color.rgb(240, 220, 160), Color.rgb(218, 165, 32));
+            base = new KeyboardPalette(Color.rgb(14, 16, 28), Color.rgb(8, 10, 18), Color.rgb(28, 32, 50), Color.rgb(200, 165, 45), Color.WHITE, Color.rgb(240, 220, 160), Color.rgb(218, 165, 32));
         } else if ("club_barcelona".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(0, 18, 48), Color.rgb(0, 10, 30), Color.rgb(155, 15, 45), Color.rgb(0, 75, 140), Color.WHITE, Color.rgb(255, 210, 80), Color.rgb(237, 27, 36));
+            base = new KeyboardPalette(Color.rgb(0, 15, 40), Color.rgb(0, 8, 25), Color.rgb(25, 20, 48), Color.rgb(140, 10, 40), Color.WHITE, Color.rgb(255, 210, 80), Color.rgb(237, 27, 36));
         } else if ("club_manutd".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(28, 5, 8), Color.rgb(18, 3, 5), Color.rgb(185, 15, 25), Color.rgb(35, 35, 35), Color.WHITE, Color.rgb(255, 200, 200), Color.rgb(229, 26, 37));
+            base = new KeyboardPalette(Color.rgb(25, 5, 8), Color.rgb(15, 3, 5), Color.rgb(35, 20, 22), Color.rgb(175, 15, 25), Color.WHITE, Color.rgb(255, 200, 200), Color.rgb(229, 26, 37));
         } else if ("club_liverpool".equals(theme)) {
-            base = new KeyboardPalette(Color.rgb(32, 5, 8), Color.rgb(20, 3, 5), Color.rgb(190, 18, 28), Color.rgb(0, 150, 130), Color.WHITE, Color.rgb(255, 215, 215), Color.rgb(200, 16, 46));
+            base = new KeyboardPalette(Color.rgb(28, 5, 8), Color.rgb(18, 3, 5), Color.rgb(38, 20, 22), Color.rgb(180, 18, 28), Color.WHITE, Color.rgb(255, 215, 215), Color.rgb(200, 16, 46));
         } else {
             base = new KeyboardPalette(Color.BLACK, Color.rgb(9, 9, 9), Color.rgb(128, 128, 128), Color.rgb(38, 38, 38), Color.WHITE, Color.rgb(201, 201, 201), Color.rgb(92, 200, 255));
         }
-        return base.withKeyStyle(preferences.getString("key_style", "remo_luxury"), theme);
+        return base.withKeyStyle(preferences.getString("key_style", "remo_luxury"), theme, hasBackground);
     }
 
-    private KeyboardPalette withKeyStyle(String style, String theme) {
+    private KeyboardPalette withKeyStyle(String style, String theme, boolean hasBackground) {
+        int alpha = hasBackground ? 170 : 240;
+        int stroke = hasBackground ? Color.argb(105, 255, 255, 255) : Color.argb(76, 255, 255, 255);
+
         if ("remo_luxury".equals(style)) {
-            // كيبورد ريمو الفاخر الافتراضي: مظهر فخم متوازن بحواف 9dp وتباين مثالي
-            return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 9, 240, Color.argb(80, 255, 255, 255));
+            return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 9, alpha, stroke);
         }
         if ("desktop".equals(style)) {
             if ("navy".equals(theme)) return new KeyboardPalette(
@@ -125,13 +130,13 @@ final class KeyboardPalette {
                 Color.rgb(222, 233, 229), Color.rgb(43, 56, 52), Color.rgb(104, 124, 118),
                 Color.rgb(80, 137, 125), 7, 255, Color.rgb(67, 91, 84)
             );
-            return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 7, 255, Color.argb(72, 255, 255, 255));
+            return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 7, hasBackground ? 180 : 255, stroke);
         }
-        if ("glass".equals(style)) return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 15, 164, Color.argb(116, 235, 250, 255));
-        if ("neon".equals(style)) return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 9, 214, Color.argb(170, Color.red(accent), Color.green(accent), Color.blue(accent)));
-        if ("slim".equals(style)) return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 4, 245, Color.argb(46, 255, 255, 255));
-        if ("pro".equals(style)) return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 11, 238, Color.argb(98, 255, 255, 255));
-        return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 6, 236, Color.argb(76, 255, 255, 255));
+        if ("glass".equals(style)) return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 15, 145, Color.argb(130, 235, 250, 255));
+        if ("neon".equals(style)) return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 9, hasBackground ? 180 : 214, Color.argb(170, Color.red(accent), Color.green(accent), Color.blue(accent)));
+        if ("slim".equals(style)) return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 4, hasBackground ? 175 : 245, stroke);
+        if ("pro".equals(style)) return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 11, hasBackground ? 175 : 238, stroke);
+        return new KeyboardPalette(background, surface, key, keySpecial, text, muted, accent, 8, alpha, stroke);
     }
 
     private static int preferenceColor(SharedPreferences preferences, String key, String fallback) {
