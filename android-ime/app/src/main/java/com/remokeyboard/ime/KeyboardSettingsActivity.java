@@ -92,6 +92,7 @@ public class KeyboardSettingsActivity extends Activity {
     private void renderMain(LinearLayout root) {
         addHeader(root, "إعدادات ريموكيبورد مزخرف", false);
         root.addView(buildDeveloperNotice());
+        root.addView(buildUpdateNotice());
 
         EditText testInput = new EditText(this);
         testInput.setHint("جرب الكتابة بريموكيبورد هنا الآن...");
@@ -273,8 +274,8 @@ public class KeyboardSettingsActivity extends Activity {
             addAction(root, "استيراد نسخة احتياطية", "استعادة بيانات محفوظة", () -> Toast.makeText(this, "لا توجد نسخة احتياطية محددة", Toast.LENGTH_SHORT).show());
         } else if (panel == Panel.ABOUT) {
             addSection(root, "حول ريموكيبورد");
-            addAction(root, "إصدار التطبيق", "ريموكيبورد مزخرف 1.0.8", () -> {});
-            addAction(root, "التحقق من التحديث", "فتح صفحة الإصدارات", () -> openExternalUrl("https://github.com/ma4alhzmi1-ai-pro/remo-player-1-0-23/releases"));
+            addAction(root, "إصدار التطبيق", "ريموكيبورد مزخرف v1.0.15 (أحدث إصدار رسمي)", () -> Toast.makeText(this, "الإصدار 1.0.15 محدث بالكامل", Toast.LENGTH_SHORT).show());
+            addAction(root, "التحقق من التحديث", "فتح مستودع المشروع الرسمي", () -> openExternalUrl("https://github.com/ma4alhzmi1-ai-pro/RemoKeyboard-Pro"));
             addAction(root, "عن المطور", "محمد الحزمي", () -> openExternalUrl("https://t.me/moh_alymani1"));
             addAction(root, "سياسة الخصوصية", "خصوصية الحافظة والصوت والروابط", () -> Toast.makeText(this, "تظل بيانات الحافظة محلية على الجهاز", Toast.LENGTH_LONG).show());
         }
@@ -464,6 +465,15 @@ public class KeyboardSettingsActivity extends Activity {
         addThemeCard(root, "محيط هادئ", "أزرق مائي وهواء منعش", "nature", "", Color.rgb(12, 45, 66), Color.rgb(36, 117, 150));
         addThemeCard(root, "ملعب الطاقة", "أحمر رياضي وأصفر حيوي", "sport", "", Color.rgb(25, 31, 40), Color.rgb(210, 70, 67));
         addThemeCard(root, "سباق ليلي", "كحلي سريع ولمسات برتقالية", "sport", "", Color.rgb(17, 26, 42), Color.rgb(238, 111, 45));
+        addSection(root, "خلفيات أندية كرة القدم (مع الشعار ثلاثي الأبعاد)");
+        addThemeCard(root, "نادي الهلال السعودي", "أزرق ملكي مع شعار الهلال الرسمي", "club_alhilal", "club_alhilal", Color.rgb(0, 32, 96), Color.rgb(0, 75, 180));
+        addThemeCard(root, "نادي النصر السعودي", "أصفر عالمي وأزرق حماسي مع شعار النصر", "club_alnassr", "club_alnassr", Color.rgb(20, 25, 45), Color.rgb(220, 180, 0));
+        addThemeCard(root, "نادي الاتحاد السعودي", "العميد - أصفر وخطوط سوداء وشعار الاتحاد", "club_alittihad", "club_alittihad", Color.rgb(15, 15, 15), Color.rgb(220, 170, 0));
+        addThemeCard(root, "النادي الأهلي السعودي", "الملكي الأخضر مع شعار الأهلي الراقي", "club_alahli", "club_alahli", Color.rgb(5, 45, 25), Color.rgb(10, 120, 60));
+        addThemeCard(root, "ريال مدريد (Real Madrid)", "الملكي الأبيض والذهبي مع تاج وشعار الريال", "club_realmadrid", "club_realmadrid", Color.rgb(18, 20, 35), Color.rgb(218, 165, 32));
+        addThemeCard(root, "برشلونة (FC Barcelona)", "البلوغرانا - أزرق وقرمزي وشعار البارسا العريق", "club_barcelona", "club_barcelona", Color.rgb(0, 20, 60), Color.rgb(160, 10, 45));
+        addThemeCard(root, "مانشستر يونايتد (Man Utd)", "الشياطين الحمر - أحمر ناري وأسود مع شعار اليونايتد", "club_manutd", "club_manutd", Color.rgb(40, 5, 10), Color.rgb(190, 15, 25));
+        addThemeCard(root, "ليفربول (Liverpool FC)", "الريدز - أحمر ليفربول الأسطوري مع طائر الليفر", "club_liverpool", "club_liverpool", Color.rgb(45, 5, 10), Color.rgb(180, 15, 25));
         addSection(root, "ثيمات أعلام الدول");
         addThemeCard(root, "علم السعودية", "أخضر وكتابة بيضاء", "flag_sa", "", Color.rgb(7, 54, 31), Color.rgb(30, 116, 67));
         addThemeCard(root, "علم فلسطين", "أسود وأبيض وأخضر وأحمر", "flag_ps", "", Color.rgb(28, 30, 32), Color.rgb(173, 45, 51));
@@ -782,6 +792,48 @@ public class KeyboardSettingsActivity extends Activity {
         devSub.setTextColor(Color.rgb(220, 200, 160));
         devSub.setTextSize(12);
         notice.addView(devSub);
+
+        return notice;
+    }
+
+    private View buildUpdateNotice() {
+        LinearLayout notice = new LinearLayout(this);
+        notice.setOrientation(LinearLayout.VERTICAL);
+        notice.setPadding(dp(16), dp(12), dp(16), dp(12));
+        notice.setBackground(rounded(Color.rgb(20, 40, 30), dp(10), false));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        params.setMargins(dp(16), dp(4), dp(16), dp(12));
+        notice.setLayoutParams(params);
+
+        LinearLayout topRow = new LinearLayout(this);
+        topRow.setOrientation(LinearLayout.HORIZONTAL);
+        topRow.setGravity(Gravity.CENTER_VERTICAL);
+
+        TextView badge = new TextView(this);
+        badge.setText("🚀 تحديث جديد v1.0.15 مفعّل");
+        badge.setTextColor(Color.rgb(74, 222, 128));
+        badge.setTextSize(13);
+        badge.setTypeface(Typeface.DEFAULT_BOLD);
+        topRow.addView(badge, new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
+
+        TextView close = new TextView(this);
+        close.setText("✕");
+        close.setTextColor(secondary);
+        close.setTextSize(15);
+        close.setPadding(dp(8), dp(4), dp(8), dp(4));
+        close.setOnClickListener(v -> notice.setVisibility(View.GONE));
+        topRow.addView(close);
+
+        notice.addView(topRow);
+
+        TextView updateDesc = new TextView(this);
+        updateDesc.setText("• تمت إضافة خلفيات وشعارات أندية كرة القدم (الهلال، النصر، الاتحاد، الأهلي، ريال مدريد، برشلونة...)\n• قلوب متوهجة للثيمات النسائية\n• التحكم الفوري بارتفاع الكيبورد وحجم الخط");
+        updateDesc.setTextColor(Color.rgb(220, 255, 235));
+        updateDesc.setTextSize(12);
+        updateDesc.setLineSpacing(dp(2), 1f);
+        LinearLayout.LayoutParams tParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        tParams.topMargin = dp(6);
+        notice.addView(updateDesc, tParams);
 
         return notice;
     }

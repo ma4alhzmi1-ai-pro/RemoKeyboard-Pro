@@ -27,7 +27,7 @@ export default function App() {
   const [showDevNotice, setShowDevNotice] = useState(false);
   const [activeTab, setActiveTab] = useState<'simulator' | 'downloads' | 'studio' | 'code'>('simulator');
   const [currentTheme, setCurrentTheme] = useState<KeyboardTheme>(KEYBOARD_THEMES[0]);
-  const [studioText, setStudioText] = useState('ريمو كيبورد 1.0.14');
+  const [studioText, setStudioText] = useState('ريمو كيبورد 1.0.15');
 
   const handleDirectDownload = async (url: string, filename: string) => {
     try {
@@ -117,17 +117,17 @@ export default function App() {
 
             {/* Quick GitHub Links */}
             <a
-              href="https://github.com/ma4alhzmi1-ai-pro/remo-player-1-0-23/releases/tag/v1.0.13-remo-keyboard"
+              href="https://github.com/ma4alhzmi1-ai-pro/RemoKeyboard-Pro/releases/tag/v1.0.15"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg bg-emerald-500 text-slate-950 hover:bg-emerald-400 active:scale-95 transition-all shadow-sm"
             >
               <Tag className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">إصدار GitHub الرسمي</span>
-              <span className="sm:hidden">v1.0.13</span>
+              <span className="sm:hidden">v1.0.15</span>
             </a>
             <button
-              onClick={() => handleDirectDownload('/RemoKeyboard-1.0.14.apk', 'RemoKeyboard-1.0.14.apk')}
+              onClick={() => handleDirectDownload('/RemoKeyboard-1.0.15.apk', 'RemoKeyboard-1.0.15.apk')}
               className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/30 active:scale-95 transition-all cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
@@ -307,7 +307,7 @@ export default function App() {
           </a>
           <span>•</span>
           <button
-            onClick={() => handleDirectDownload('/RemoKeyboard-1.0.14.apk', 'RemoKeyboard-1.0.14.apk')}
+            onClick={() => handleDirectDownload('/RemoKeyboard-1.0.15.apk', 'RemoKeyboard-1.0.15.apk')}
             className="hover:text-cyan-400 transition-colors flex items-center gap-1 bg-transparent border-none cursor-pointer p-0 text-xs text-slate-400"
           >
             <Download className="w-3 h-3" />
@@ -315,7 +315,7 @@ export default function App() {
           </button>
           <span>•</span>
           <button
-            onClick={() => handleDirectDownload('/remo-keyboard-1.0.14-source.zip', 'remo-keyboard-1.0.14-source.zip')}
+            onClick={() => handleDirectDownload('/remo-keyboard-1.0.15-source.zip', 'remo-keyboard-1.0.15-source.zip')}
             className="hover:text-purple-400 transition-colors flex items-center gap-1 bg-transparent border-none cursor-pointer p-0 text-xs text-slate-400"
           >
             <Download className="w-3 h-3" />

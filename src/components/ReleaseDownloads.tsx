@@ -32,17 +32,17 @@ export function ReleaseDownloads() {
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-mono font-medium">
               <GitBranch className="w-3.5 h-3.5" />
-              branch: remo-keyboard-v1.0.14
+              branch: remo-keyboard-v1.0.15
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/25 text-purple-300 text-xs font-mono font-medium">
               <Tag className="w-3.5 h-3.5" />
-              tag: v1.0.14-remo-keyboard
+              tag: v1.0.15-remo-keyboard
             </span>
           </div>
 
           <div className="space-y-1">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              ريموكيبورد مزخرف <span className="text-emerald-400 font-mono">1.0.14</span>
+              ريموكيبورد مزخرف <span className="text-emerald-400 font-mono">1.0.15</span>
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
               تطبيق لوحة مفاتيح أندرويد أصلية (Android IME) فائقة الخفة والسلاسة، مع زخرفة نصوص، خطوط، ثيمات ملونة، حافظة ذكية، ودعم إيموجي شامل.
@@ -53,7 +53,7 @@ export function ReleaseDownloads() {
           <div className="p-4 rounded-xl border border-slate-800 bg-slate-950/80 space-y-2 text-xs">
             <div className="font-bold text-white flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-emerald-400" />
-              <span>ملاحظات التحديث لإصدار 1.0.14:</span>
+              <span>ملاحظات التحديث لإصدار 1.0.15:</span>
             </div>
             <p className="text-slate-300 leading-relaxed">
               «إضافة نظام التصحيح التلقائي والمقترحات الذكية (Auto-Correction) للغة العربية والإنجليزية، إمكانية التحكم في حجم الأحرف وإرتفاع الكيبورد، تحويل أزرار الكيبورد إلى قلوب في الثيمات النسائية، وشعارات أندية كرة القدم في الخلفية. جاهز للتحميل المباشر دون تسجيل.»
@@ -78,14 +78,14 @@ export function ReleaseDownloads() {
               </div>
               <div className="pt-4 border-t border-emerald-500/20 mt-3 flex flex-col gap-2">
                 <button
-                  onClick={() => handleDirectDownload('/RemoKeyboard-1.0.14.apk', 'RemoKeyboard-1.0.14.apk')}
+                  onClick={() => handleDirectDownload('/RemoKeyboard-1.0.15.apk', 'RemoKeyboard-1.0.15.apk')}
                   className="inline-flex items-center justify-center gap-1.5 w-full py-2 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-all active:scale-95 shadow-sm cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>تنزيل APK مباشر</span>
                 </button>
                 <button
-                  onClick={() => handleDirectDownload('/RemoKeyboard-1.0.14-Android-APK.zip', 'RemoKeyboard-1.0.14-Android-APK.zip')}
+                  onClick={() => handleDirectDownload('/RemoKeyboard-1.0.15-Android-APK.zip', 'RemoKeyboard-1.0.15-Android-APK.zip')}
                   className="inline-flex items-center justify-center gap-1.5 w-full py-1.5 rounded-lg bg-slate-900 text-slate-300 border border-slate-700 text-[11px] font-semibold hover:bg-slate-800 transition-all cursor-pointer"
                 >
                   <FileArchive className="w-3 h-3" />
@@ -105,12 +105,12 @@ export function ReleaseDownloads() {
                 </div>
                 <h3 className="font-bold text-white text-sm">سورس كود ريمو كيبورد (ZIP)</h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  أرشيف يحتوي على كامل الكود المصدري للفرع 1.0.14 شاملاً مجلد الـ IME الأصلي واستوديو الثيمات والـ workflows.
+                  أرشيف يحتوي على كامل الكود المصدري للفرع 1.0.15 شاملاً مجلد الـ IME الأصلي واستوديو الثيمات والـ workflows.
                 </p>
               </div>
               <div className="pt-4 border-t border-cyan-500/20 mt-3">
                 <button
-                  onClick={() => handleDirectDownload('/remo-keyboard-1.0.14-source.zip', 'remo-keyboard-1.0.14-source.zip')}
+                  onClick={() => handleDirectDownload('/remo-keyboard-1.0.15-source.zip', 'remo-keyboard-1.0.15-source.zip')}
                   className="inline-flex items-center justify-center gap-1.5 w-full py-2 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs hover:bg-cyan-400 transition-all active:scale-95 shadow-sm cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
@@ -133,7 +133,7 @@ export function ReleaseDownloads() {
               </div>
               <div className="pt-4 border-t border-slate-800 mt-3 flex flex-col gap-2">
                 <a
-                  href="https://github.com/ma4alhzmi1-ai-pro/remo-player-1-0-23/releases/tag/v1.0.14-remo-keyboard"
+                  href="https://github.com/ma4alhzmi1-ai-pro/RemoKeyboard-Pro/releases/tag/v1.0.15"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-1.5 w-full py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs transition-all active:scale-95"
@@ -142,13 +142,13 @@ export function ReleaseDownloads() {
                   <span>فتح رابط Release في GitHub</span>
                 </a>
                 <a
-                  href="https://github.com/ma4alhzmi1-ai-pro/remo-player-1-0-23/tree/remo-keyboard-v1.0.14"
+                  href="https://github.com/ma4alhzmi1-ai-pro/RemoKeyboard-Pro"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-1.5 w-full py-1.5 rounded-lg bg-slate-950 text-slate-400 border border-slate-800 text-[11px] font-semibold hover:bg-slate-900 transition-all"
                 >
                   <GitBranch className="w-3 h-3" />
-                  <span>تصفح الفرع remo-keyboard-v1.0.14</span>
+                  <span>تصفح مستودع المشروع (RemoKeyboard-Pro)</span>
                 </a>
               </div>
             </div>

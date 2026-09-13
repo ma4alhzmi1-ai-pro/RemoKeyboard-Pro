@@ -8,7 +8,7 @@ on:
       - "remo-keyboard-v*"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-apk:
@@ -42,14 +42,34 @@ jobs:
         working-directory: android-ime
         run: gradle :app:assembleDebug --no-daemon --stacktrace
 
-      - name: Create compressed APK package
+      - name: Prepare APK outputs
         working-directory: android-ime/app/build/outputs/apk/debug
-        run: zip -9 "RemoKeyboard-1.0.14-Android-APK.zip" app-debug.apk
+        run: |
+          cp app-debug.apk RemoKeyboard-1.0.15.apk
+          zip -9 "RemoKeyboard-1.0.15-Android-APK.zip" RemoKeyboard-1.0.15.apk
 
       - name: Upload compressed APK
         uses: actions/upload-artifact@v4
         with:
-          name: RemoKeyboard-1.0.14-Android-APK
-          path: android-ime/app/build/outputs/apk/debug/RemoKeyboard-1.0.14-Android-APK.zip
+          name: RemoKeyboard-1.0.15-Android-APK
+          path: android-ime/app/build/outputs/apk/debug/RemoKeyboard-1.0.15-Android-APK.zip
           if-no-files-found: error
           retention-days: 90
+
+      - name: Create or Update GitHub Release v1.0.15
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: v1.0.15
+          name: "RemoKeyboard Pro v1.0.15 - أحدث إصدار رسمي"
+          body: |
+            ## تحديث ريمو كيبورد الاحترافي v1.0.15 🚀
+            
+            - ⚽ **خلفيات وشعارات أندية كرة القدم**: الهلال، النصر، الاتحاد، الأهلي، ريال مدريد، برشلونة، مانشستر يونايتد، ليفربول.
+            - 💖 **تأثيرات القلوب المتوهجة**: حركات إيموجي وقلوب حيوية للثيمات النسائية والأناقة.
+            - 📏 **التحكم بالارتفاع وحجم الخط**: تخصيص كامل لحجم الأزرار والحروف بما يناسب راحة اليد.
+            - 📥 **تنزيل APK وتثبيت فوري مباشر**.
+            - 📱 **إشعار التحديث في لوحة الإعدادات الأصلية**.
+          files: |
+            android-ime/app/build/outputs/apk/debug/RemoKeyboard-1.0.15.apk
+            android-ime/app/build/outputs/apk/debug/RemoKeyboard-1.0.15-Android-APK.zip

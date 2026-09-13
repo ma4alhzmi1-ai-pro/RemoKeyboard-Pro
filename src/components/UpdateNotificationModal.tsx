@@ -5,14 +5,14 @@ export function UpdateNotificationModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const seenVersion = localStorage.getItem('remo_seen_version_1.0.14');
+    const seenVersion = localStorage.getItem('remo_seen_version_1.0.15');
     if (!seenVersion) {
       setIsOpen(true);
     }
   }, []);
 
   const handleClose = () => {
-    localStorage.setItem('remo_seen_version_1.0.14', 'true');
+    localStorage.setItem('remo_seen_version_1.0.15', 'true');
     setIsOpen(false);
   };
 
@@ -32,7 +32,7 @@ export function UpdateNotificationModal() {
           
           <div className="flex items-center gap-2 mb-2">
             <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold border border-emerald-500/30">
-              إصدار جديد v1.0.14
+              إصدار جديد v1.0.15
             </span>
             <span className="flex items-center gap-1 text-xs text-cyan-400 font-mono">
               <CheckCircle2 className="w-3.5 h-3.5" />
@@ -93,7 +93,7 @@ export function UpdateNotificationModal() {
             <div className="space-y-1">
               <h3 className="text-sm font-bold text-white">التحميل المباشر الفوري (بدون جيت هاب)</h3>
               <p className="text-xs text-slate-300 leading-relaxed">
-                تم تفعيل نظام التنزيل المباشر بضغطة زر واحدة (APK وملفات ZIP) لجميع حزم الإصدار 1.0.14 دون الحاجة لأي تسجيل دخول.
+                تم تفعيل نظام التنزيل المباشر بضغطة زر واحدة (APK وملفات ZIP) لجميع حزم الإصدار 1.0.15 دون الحاجة لأي تسجيل دخول.
               </p>
             </div>
           </div>

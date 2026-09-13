@@ -560,7 +560,7 @@ export function KeyboardSimulator({
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-sm text-white">ريمو كيبورد الأصلي v1.0.14</span>
+              <span className="font-bold text-sm text-white">ريمو كيبورد الأصلي v1.0.15</span>
               <span className="text-[10px] font-mono text-cyan-300 bg-cyan-950/70 border border-cyan-500/30 px-2 py-0.5 rounded-full">
                 الافتراضي: {currentTheme.nameAr}
               </span>

@@ -92,6 +92,22 @@ final class KeyboardPalette {
             base = new KeyboardPalette(Color.rgb(22, 32, 30), Color.rgb(12, 20, 18), Color.rgb(179, 55, 55), Color.rgb(35, 111, 70), Color.WHITE, Color.rgb(204, 221, 211), Color.rgb(218, 91, 77));
         } else if ("flag_jo".equals(theme)) {
             base = new KeyboardPalette(Color.rgb(30, 30, 34), Color.rgb(13, 14, 16), Color.rgb(143, 48, 48), Color.rgb(43, 93, 60), Color.WHITE, Color.rgb(214, 214, 214), Color.rgb(218, 83, 83));
+        } else if ("club_alhilal".equals(theme)) {
+            base = new KeyboardPalette(Color.rgb(0, 24, 75), Color.rgb(0, 15, 50), Color.rgb(0, 50, 140), Color.rgb(0, 90, 200), Color.WHITE, Color.rgb(180, 215, 255), Color.rgb(30, 144, 255));
+        } else if ("club_alnassr".equals(theme)) {
+            base = new KeyboardPalette(Color.rgb(15, 20, 35), Color.rgb(10, 14, 25), Color.rgb(220, 175, 0), Color.rgb(30, 45, 90), Color.WHITE, Color.rgb(255, 235, 150), Color.rgb(255, 215, 0));
+        } else if ("club_alittihad".equals(theme)) {
+            base = new KeyboardPalette(Color.rgb(15, 15, 15), Color.rgb(8, 8, 8), Color.rgb(230, 175, 0), Color.rgb(40, 40, 40), Color.WHITE, Color.rgb(255, 230, 140), Color.rgb(245, 190, 0));
+        } else if ("club_alahli".equals(theme)) {
+            base = new KeyboardPalette(Color.rgb(5, 35, 20), Color.rgb(3, 24, 14), Color.rgb(10, 90, 48), Color.rgb(15, 120, 65), Color.WHITE, Color.rgb(180, 240, 205), Color.rgb(46, 204, 113));
+        } else if ("club_realmadrid".equals(theme)) {
+            base = new KeyboardPalette(Color.rgb(14, 16, 28), Color.rgb(8, 10, 18), Color.rgb(35, 40, 65), Color.rgb(212, 175, 55), Color.WHITE, Color.rgb(240, 220, 160), Color.rgb(218, 165, 32));
+        } else if ("club_barcelona".equals(theme)) {
+            base = new KeyboardPalette(Color.rgb(0, 18, 48), Color.rgb(0, 10, 30), Color.rgb(155, 15, 45), Color.rgb(0, 75, 140), Color.WHITE, Color.rgb(255, 210, 80), Color.rgb(237, 27, 36));
+        } else if ("club_manutd".equals(theme)) {
+            base = new KeyboardPalette(Color.rgb(28, 5, 8), Color.rgb(18, 3, 5), Color.rgb(185, 15, 25), Color.rgb(35, 35, 35), Color.WHITE, Color.rgb(255, 200, 200), Color.rgb(229, 26, 37));
+        } else if ("club_liverpool".equals(theme)) {
+            base = new KeyboardPalette(Color.rgb(32, 5, 8), Color.rgb(20, 3, 5), Color.rgb(190, 18, 28), Color.rgb(0, 150, 130), Color.WHITE, Color.rgb(255, 215, 215), Color.rgb(200, 16, 46));
         } else {
             base = new KeyboardPalette(Color.BLACK, Color.rgb(9, 9, 9), Color.rgb(128, 128, 128), Color.rgb(38, 38, 38), Color.WHITE, Color.rgb(201, 201, 201), Color.rgb(92, 200, 255));
         }
